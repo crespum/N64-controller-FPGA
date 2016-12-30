@@ -1,0 +1,6 @@
+*.blif
+*.asc
+*.bin
+*.out
+*.vcd
+*.dblite
