@@ -1,29 +1,28 @@
-//-------------------------------------------------------------------
-//-- Ejemplo de uso de un registro de desplazamiento de 4 bits
-//-- para generar una secuencia de rotacion de bits
-//-------------------------------------------------------------------
-//-- (C) BQ. August 2015. Written by Juan Gonzalez (obijuan)
-//-- GPL license
-//-------------------------------------------------------------------
-module shiftM(input wire clk, input wire enable, output dout);
+// M-bit shift register
+// (Based on 4-bit shift register from obijuan)
+//
+// Inputs:  clk.    Clock for shifting
+//          enable. On active, enable module
+//          serin.  Serial input
+// Outputs: data.   Parallel output
+module shiftM(input wire clk,
+              input wire enable,
+              input wire serin,
+              output [M-1:0] data);
 
-//-- Numero de bits
+// Bit count
 parameter M = 32;
 
-//-- Valor inicial a cargar en el registro
+// Initial value to load on register
 parameter INI = 1;
-
 reg [M-1:0] data = INI;
 
-//-- Registro de desplazamiento
+// Shift register
 always @(posedge(clk)) begin
-    if (enable == 1) begin//-- Load mode
-        data[0] <= data[M-1];
+    if (enable == 1) begin
+        data[0]     <= serin;
         data[M-1:1] <= data[M-2:0];
     end
 end
-
-//-- Salida de mayor peso se re-introduce por la entrada serie
-assign dout = data[0];
 
 endmodule

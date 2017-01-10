@@ -1,30 +1,30 @@
-module counterM(input wire clk, input wire reset, output empty);
+// Descending counter
+//
+// Inputs:  clk    Counter clock
+//          reset  When active, set count to M
+// Outputs: empty  Active when counter is 0
+module counterM(input wire clk,
+                input wire reset,
+                output empty);
 
-//-- Valor por defecto de la salida
-reg empty = 1;
-
-//-- Valor por defecto del contador
+// Value of counter to set on 'reset'
 parameter M = 35;
 
-//-- Numero de bits para almacenar el divisor
-//-- Se calculan con la funcion de verilog $clog2, que nos devuelve el
-//-- numero de bits necesarios para representar el numero M
-//-- Es un parametro local, que no se puede modificar al instanciar
+// Number of bits needed to store value of counter
 localparam N = $clog2(M) + 1;
 
-//-- Registro para implementar el contador modulo M
+// Register to store counter value
 reg [N-1:0] divcounter = 0;
 
-//-- Contador módulo M
+// Counter: will only count down to 0
 always @(posedge clk)
-    if (reset == 1) begin
+    if (reset == 1)
         divcounter <= M;
-        empty <= 0;
-    end
-    else begin
+    else
         if (divcounter > 0)
             divcounter <= divcounter - 1;
-        if (divcounter == 1)
-            empty <= 1;
-    end
+
+// output 'empty' will be active when all bits are 0
+assign empty = ~| divcounter;
+
 endmodule

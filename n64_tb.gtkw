@@ -1,30 +1,26 @@
 [*]
 [*] GTKWave Analyzer v3.3.66 (w)1999-2015 BSI
-[*] Thu Dec 29 18:59:01 2016
+[*] Tue Jan  3 18:48:19 2017
 [*]
-[dumpfile] "/home/xabi/Documents/Dev/open-fpga-verilog-tutorial/tutorial/ICESTICK/n64/n64_tb.vcd"
-[dumpfile_mtime] "Thu Dec 29 18:58:27 2016"
-[dumpfile_size] 2155
-[savefile] "/home/xabi/Documents/Dev/open-fpga-verilog-tutorial/tutorial/ICESTICK/n64/n64_tb.gtkw"
-[timestart] 0
-[size] 1280 683
+[dumpfile] "/home/xabi/Documents/Dev/N64-controller-FPGA/n64_tb.vcd"
+[dumpfile_mtime] "Tue Jan  3 18:47:50 2017"
+[dumpfile_size] 7502511
+[savefile] "/home/xabi/Documents/Dev/N64-controller-FPGA/n64_tb.gtkw"
+[timestart] 10752
+[size] 1920 1016
 [pos] 1869 282
-*-3.998869 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-8.998869 1019 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] n64_tb.
 [treeopen] n64_tb.n64.
+[treeopen] n64_tb.n64.n64.
 [sst_width] 229
 [signals_width] 150
 [sst_expanded] 1
-[sst_vpaned_height] 168
+[sst_vpaned_height] 284
 @28
 n64_tb.clk
 n64_tb.data
-@25
-n64_tb.in
-@28
-n64_tb.n64.counter32.empty
-n64_tb.n64.counter32.reset
-@22
-n64_tb.n64.counter32.divcounter[5:0]
+n64_tb.n64.dout_o
+n64_tb.n64.output_en
 [pattern_trace] 1
 [pattern_trace] 0
