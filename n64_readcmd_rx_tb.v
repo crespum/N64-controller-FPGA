@@ -27,7 +27,7 @@ initial begin
   data = 1'b1;
 
   $dumpfile("n64_readcmd_rx_tb.vcd");
-  $dumpvars(0, n64_tb);
+  $dumpvars(0, n64_readcmd_rx_tb);
 
   repeat (50) begin
 	#5000;
