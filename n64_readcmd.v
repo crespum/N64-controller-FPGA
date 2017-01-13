@@ -1,4 +1,4 @@
-module n64_readcmd(input wire clk_4M, inout data, output wire [31:0] ctrl_state, output wire ctrl_clk);
+module n64_readcmd(input wire clk_4M, inout data, output wire [31:0] ctrl_state, output wire ctrl_clk, output wire debug);
 
 // Internal wires
 wire read_start;    // Trigger signal
@@ -42,10 +42,10 @@ n64_readcmd_tx
     );
 
 // rx block enable signal (TODO: improve)
-reg receive = 0;
-always @(posedge(read_start)) receive = 0;
-always @(negedge(output_en))  receive = 1;
-always @(negedge(ctrl_clk))   receive = 0;
+reg triggered = 0;
+always @(posedge(read_start)) triggered = 1;
+wire receive = ~output_en & triggered;
+assign debug = receive;
 
 // Parser/reception block, must be enabled
 // after transmission end. Reads the data

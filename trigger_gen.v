@@ -8,7 +8,7 @@ reg trigger = 0;
 //-- Se calculan con la funcion de verilog $clog2, que nos devuelve el
 //-- numero de bits necesarios para representar el numero M
 //-- Es un parametro local, que no se puede modificar al instanciar
-localparam N = $clog2(M) + 1;
+localparam N = $clog2(M);
 
 //-- Registro para implementar el contador modulo M
 reg [N-1:0] divcounter = M;

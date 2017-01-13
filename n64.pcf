@@ -1,3 +1,7 @@
 set_io data 87
 set_io clk  21
-set_io led  10
+set_io led_middle 95
+set_io led_up 96
+set_io led_down 98
+set_io led_left 97
+set_io led_right 99

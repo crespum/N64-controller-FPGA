@@ -16,7 +16,7 @@ module n64_readcmd_rx(input wire clk_4M,
 // Sampling frequency is 4 MHz
 wire [6:0] sampling_window;
 
-shiftM #(.M(7), .INI(7'b0))
+shiftM #(.M(7), .INI(7'b1111111))
     shift32(
         .clk(clk_4M),
         .enable(enable),
@@ -27,9 +27,9 @@ shiftM #(.M(7), .INI(7'b0))
 // When we detect a falling edge at the oldest bit of
 // the sampling window, we already have our desired
 // bit at the newest position
-wire [31:0] ctrl_state_dirty;
+wire [32:0] ctrl_state_dirty;
 
-shiftM #(.M(32), .INI(32'b0))
+shiftM #(.M(33), .INI(33'b0))
     controller_state(
         .clk(~sampling_window[6]),
         .enable(enable),
@@ -37,7 +37,7 @@ shiftM #(.M(32), .INI(32'b0))
         .data(ctrl_state_dirty)
     );
 
-// We need to update our 'ctrl_state' from 'ctrl_state_dirty' 
+// We need to update our 'ctrl_state' from 'ctrl_state_dirty'
 // at the right time, that is, when we finish reading
 // all of the 32 bits.
 wire output_en;
@@ -49,8 +49,9 @@ counterM #(.M(32))
     .empty(ctrl_clk)
   );
 
+
 initial ctrl_state = 32'b0;
 always @(posedge ctrl_clk)
-    ctrl_state <= ctrl_state_dirty;
+    ctrl_state <= ctrl_state_dirty[32:1];
 
 endmodule
