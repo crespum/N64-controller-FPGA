@@ -1,10 +1,19 @@
-module n64_readcmd(input wire clk_4M, inout data, output wire [31:0] ctrl_state, output wire ctrl_clk, output wire debug);
+// N64 controller module
+//
+// Inputs:          clk_4M      4 MHz clock
+// Input/Output:    data        Data line to send the request and receive the response
+// Outputs:         ctrl_state  32-bit register with controller state
+//                  ctrl_clk    Output clock, sample at negative edge
+module n64_readcmd(input wire clk_4M,
+                   inout data,
+                   output wire [31:0] ctrl_state,
+                   output wire ctrl_clk);
 
 // Internal wires
 wire read_start;    // Trigger signal
 wire output_en;     // Active when transmitting data
 
-// Our data line will be buffered through this SB_IO block. 
+// Our data line will be buffered through this SB_IO block.
 // This manual I/O instance allows us to control
 // output enable, and thus switch between input and
 // output
@@ -21,19 +30,19 @@ SB_IO #(
     .D_IN_0(data_i)
 );
 
-// Generate 1 MHz clock (needed for tx block) 
+// Generate 1 MHz clock (needed for tx block)
 // from the 4 MHz clock
 wire clk_1M;
-divM #(.M(4)) 
+divM #(.M(4))
     div3 (
         .clk_in(clk_4M),
         .clk_out(clk_1M)
     );
 
-// Generator/transmission block, sends the 
+// Generator/transmission block, sends the
 // read command over the data line when
 // triggered
-n64_readcmd_tx 
+n64_readcmd_tx
     n64_readcmd_tx_i (
         .clk_1M(clk_1M),
         .trigger(read_start),
@@ -45,7 +54,6 @@ n64_readcmd_tx
 reg triggered = 0;
 always @(posedge(read_start)) triggered = 1;
 wire receive = ~output_en & triggered;
-assign debug = receive;
 
 // Parser/reception block, must be enabled
 // after transmission end. Reads the data
@@ -62,7 +70,7 @@ n64_readcmd_rx
 // Trigger generator, for periodically
 // sending a read command
 triggerM
-    trigger512 (
+    trigger_read (
         .clk(clk_1M),
         .trigger(read_start)
     );

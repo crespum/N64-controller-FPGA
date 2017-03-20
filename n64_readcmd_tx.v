@@ -22,16 +22,16 @@ assign enable_o = ~ctr_empty;
 // On 'trigger', counts from 34 to 0 (for counting output
 // bits) and sets 'ctr_empty' active on finish.
 counterM #(.M(34))
-    counter34(
+    counter_signal_cycles (
         .clk(clk_1M),
         .reset(trigger),
         .empty(ctr_empty)
     );
 
-// Shift register containing the raw waveform of the 
+// Shift register containing the raw waveform of the
 // read command. Only enabled when counter is not 0.
 shiftM #(.M(34), .INI(34'b0001000100010001000100010001011101))
-    shift34 (
+    shift_signal (
         .clk(clk_1M),
         .enable(~ctr_empty),
         .serin(dout),
